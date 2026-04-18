@@ -1565,7 +1565,7 @@ function renderNotes(){
     </div>`).join('');
 }
 function noteToChat(id){const n=getNotes().find(x=>x.id===id);if(n){appendMsg('user','📝 '+n.title+': '+n.body);closeModal('notes');}}
- <script>
+
 // ========== DICTIONARY ==========
 async function lookupWord(){
   const word=document.getElementById('dictWord').value.trim();
