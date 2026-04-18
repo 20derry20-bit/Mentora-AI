@@ -1463,11 +1463,12 @@ function trCopyResult(){navigator.clipboard.writeText(document.getElementById('t
 function trSendToChat(){
   const orig=document.getElementById('trInput').value.trim();
   const trans=document.getElementById('trResultText').textContent;
-  if(trans){appendMsg('ai','🌐 **Traduzione:**
- 
-'+trans+(orig?'
- 
-*(Originale: '+orig+')*':''));g('messages').scrollTop=g('messages').scrollHeight;}
+ 1466    if(trans){
+1467        appendMsg('ai', '🧠 **Traduzione:**\n' + trans + '\n*(Originale: ' + orig + ')*');
+1468        g('messages').scrollTop = g('messages').scrollHeight;
+1469    }
+1470    closeTrModal();
+
   closeTrModal();
 }
 function closeTrModal(){trStopCam();closeModal('translate');}
