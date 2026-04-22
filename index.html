@@ -1116,42 +1116,44 @@ function appendMsg(role,text,thinking){
 }
 
 // ── SEND MESSAGE (streaming) ──────────────────────────────────────────────────
-async function sendMsg(){
-  var input=G('inp');var text=input.value.trim();
-  if(!text||isLoading)return;
-  input.value='';input.style.height='auto';toggleSend(input);G('wcb').textContent='0';
-  isLoading=true;
-  appendMsg('user',text);
-  chatHist.push({role:'user',content:text});
-  var thinkEl=appendMsg('ai','',true);
-  document.title='💬 Mentora sta scrivendo...';
-  try{
-    var res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4000,stream:true,system:buildSysPrompt(),messages:chatHist})});
-    thinkEl.remove();
-    var msgDiv=appendMsg('ai','');
-    var bubble=msgDiv.querySelector('.bubble');
-    var full='';
-    var reader=res.body.getReader();var dec=new TextDecoder();
-    while(true){
-      var rd=await reader.read();if(rd.done)break;
-      var lines=dec.decode(rd.value).split('\n');
-      for(var i=0;i<lines.length;i++){
-        var line=lines[i];
-        if(!line.startsWith('data:'))continue;
-        var data=line.slice(5).trim();if(data==='[DONE]')continue;
-        try{var j=JSON.parse(data);var delta=j&&j.delta&&j.delta.text?j.delta.text:'';if(delta){full+=delta;bubble.innerHTML=renderMd(full);G('msgs').scrollTop=G('msgs').scrollHeight;}}catch(e){}
-      }
-    }
-    if(!full){bubble.innerHTML=renderMd('Errore. Riprova!');full='Errore.';}
-    chatHist.push({role:'assistant',content:full});
-    addQuickActions(msgDiv, full);
-    if(ttsEnabled) speakText(full);
-    saveChatToHistory();
-  }catch(err){if(thinkEl.parentNode)thinkEl.remove();appendMsg('ai','Errore. Riprova!');}
-  isLoading=false;
-  document.title='Mentora AI';
-}
+async function sendMsg() {
+  var input = G('inp');
+  var text = input.value.trim();
+  if (!text || isLoading) return;
 
+  input.value = '';
+  input.style.height = 'auto';
+  toggleSend(input);
+  G('wcb').textContent = '0';
+  isLoading = true;
+
+  appendMsg('user', text);
+
+  document.title = '💬 Mentora sta scrivendo...';
+
+  try {
+    var res = await fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    var data = await res.json();
+    appendMsg('ai', data.reply);
+
+  } catch (e) {
+    appendMsg('ai', "⚠️ Errore di connessione al server.");
+  }
+
+  isLoading = false;
+  document.title = 'Mentora AI';
+}
+function closeId() { 
+  idStopCam(); 
+  idCapturedB64 = null; 
+  closeModal('identify'); 
+}
+  
 // ── IMAGE GENERATOR ───────────────────────────────────────────────────────────
 async function generateImage(){
   var prompt=G('imgPrompt').value.trim();if(!prompt){toast('Scrivi una descrizione!');return;}
