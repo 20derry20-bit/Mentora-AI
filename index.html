@@ -2035,19 +2035,35 @@ function copyCorrect() {
 // ── SUMMARIZE ─────────────────────────────────────────────────────────────────
 async function summarizeText(mode) {
   var text = G('summaryInput').value.trim();
-  if (!text) { toast('Incolla un testo prima!'); return; }
+  if (!text) { 
+    toast('Incolla un testo prima!'); 
+    return; 
+  }
+
   G('summaryLoad').style.display = 'block';
   G('summaryResult').style.display = 'none';
+
   var prompt = mode === 'punti'
-    ? 'Riassumi questo testo in 5-8 punti chiave con bullet points. Sii conciso e chiaro:\n\n' + text
-    : 'Scrivi un riassunto breve (massimo 100 parole) di questo testo:\n\n' + text;
+    ? 'Riassumi questo testo in 5-8 punti chiave, chiari e concisi:\n\n' + text
+    : 'Scrivi un riassunto breve (max 100 parole) di questo testo:\n\n' + text;
+
   try {
-    var res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:1000, messages:[{role:'user',content:prompt}] }) });
+    var res = await fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: prompt })
+    });
+
     var data = await res.json();
-    var result = data.content && data.content[0] && data.content[0].text ? data.content[0].text : 'Errore.';
-    G('summaryResult').innerHTML = renderMd(result);
+
+    G('summaryResult').innerHTML = renderMd(data.reply);
     G('summaryResult').style.display = 'block';
-  } catch(e) { G('summaryResult').innerHTML = 'Errore: ' + e.message; G('summaryResult').style.display = 'block'; }
+
+  } catch (e) {
+    G('summaryResult').innerHTML = 'Errore: ' + e.message;
+    G('summaryResult').style.display = 'block';
+  }
+
   G('summaryLoad').style.display = 'none';
 }
 
