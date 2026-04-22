@@ -1761,7 +1761,12 @@ async function idAnalyze() {
   G('idLoad').style.display = 'block';
   G('idResult').style.display = 'none';
   try {
-    var res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+});
+
       model: 'claude-sonnet-4-20250514',
       max_tokens: 600,
       messages: [{
