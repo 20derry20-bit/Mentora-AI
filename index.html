@@ -2051,6 +2051,20 @@ async function summarizeText(mode) {
   G('summaryLoad').style.display = 'none';
 }
 
+    // Gestisce il tasto Invio nella textarea
+function handleKey(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMsg();
+  }
+}
+
+// Auto‑resize della textarea
+function autoResize(el) {
+  el.style.height = "auto";
+  el.style.height = (el.scrollHeight) + "px";
+}
+
 // ── SHARE CHAT ────────────────────────────────────────────────────────────────
 function openShare() {
   if (!chatHist.length) { toast('Nessuna chat da condividere!'); return; }
