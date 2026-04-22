@@ -1177,18 +1177,36 @@ async function generateImage(){
 }
 
 // ── VIDEO PROMPT ──────────────────────────────────────────────────────────────
-async function generateVideoPrompt(){
-  var desc=G('vidPrompt').value.trim();if(!desc){toast('Descrivi il video prima!');return;}
-  closeModal('video');appendMsg('user','🎬 '+desc);
-  chatHist.push({role:'user',content:'Scrivi un prompt video AI professionale per: '+desc});
-  var thinkEl=appendMsg('ai','',true);
-  try{
-    var sys='Sei un esperto di prompt per la generazione video AI. Scrivi un prompt professionale ottimizzato per Sora/Runway/Pika in inglese. Includi: movimento camera, illuminazione, stile visivo, atmosfera, soggetti dettagliati. Rispondi SOLO con il prompt, senza introduzioni.';
-    var res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:500,system:sys,messages:[{role:'user',content:desc}]})});
-    var data=await res.json();var reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Errore.';
-    thinkEl.remove();appendMsg('ai','🎬 **Prompt video AI:**\n\n```\n'+reply+'\n```\n\nIncolla su **Sora, Runway o Pika**!');
-    chatHist.push({role:'assistant',content:reply});saveChatToHistory();
-  }catch(e){thinkEl.remove();appendMsg('ai','Errore. Riprova!');}
+async function generateVideoPrompt() {
+  var desc = G('vidPrompt').value.trim();
+  if (!desc) {
+    toast('Descrivi il video prima!');
+    return;
+  }
+
+  closeModal('video');
+  appendMsg('user', '🎬 ' + desc);
+
+  var thinkEl = appendMsg('ai', '', true);
+
+  try {
+    var res = await fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "Scrivi un prompt video AI professionale per: " + desc
+      })
+    });
+
+    var data = await res.json();
+    thinkEl.remove();
+
+    appendMsg('ai', "🎬 **Prompt video AI:**\n\n```\n" + data.reply + "\n```");
+
+  } catch (e) {
+    thinkEl.remove();
+    appendMsg('ai', "⚠️ Errore durante la generazione del prompt.");
+  }
 }
 
 // ── QR SCANNER ────────────────────────────────────────────────────────────────
