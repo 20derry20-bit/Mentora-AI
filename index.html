@@ -861,7 +861,8 @@
 
   async function callMentora(prompt){
     try {
-      var res = await fetch(API, {
+      var res = await fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: prompt })
