@@ -4,29 +4,45 @@ import { Groq } from "groq-sdk";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "25mb" }));
 
-const client = new Groq({
+// Inizializza Groq
+const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY
 });
 
+// Endpoint principale
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message } = req.body;
+    const userMessage = req.body.message;
 
-    const completion = await client.chat.completions.create({
-      model: "llama-3.1-70b-versatile",
+    if (!userMessage) {
+      return res.status(400).json({ reply: "Nessun messaggio ricevuto." });
+    }
+
+    // Chiamata al modello Groq aggiornato
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
       messages: [
-        { role: "system", content: "Sei Mentora AI, un assistente utile e chiaro." },
-        { role: "user", content: message }
+        { role: "system", content: "Sei Mentora, un assistente AI utile, chiaro e amichevole." },
+        { role: "user", content: userMessage }
       ]
     });
 
-    res.json({ reply: completion.choices[0].message.content });
-  } catch (error) {
-    console.error("Errore Groq:", error);
-    res.status(500).json({ error: "Errore interno del server" });
+    const output = completion.choices?.[0]?.message?.content || "Errore: nessuna risposta dal modello.";
+
+    res.json({ reply: output });
+
+  } catch (err) {
+    console.error("Errore Groq:", err);
+    res.status(500).json({
+      reply: "Errore interno del server."
+    });
   }
 });
 
-app.listen(3000, () => console.log("Server avviato su porta 3000"));
+// Avvio server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server attivo sulla porta " + PORT);
+});
