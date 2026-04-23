@@ -2010,27 +2010,36 @@ async function generateStory() {
 async function correctText(mode) {
   var text = G('correctInput').value.trim();
   if (!text) { toast('Incolla un testo prima!'); return; }
+
   G('correctLoad').style.display = 'block';
   G('correctResult').style.display = 'none';
   G('correctCopyBtn').style.display = 'none';
+
   var prompt = mode === 'correggi'
-    ? 'Correggi tutti gli errori grammaticali, ortografici e di punteggiatura in questo testo, mantenendo il significato originale. Rispondi SOLO con il testo corretto, senza spiegazioni:\n\n' + text
-    : 'Migliora lo stile di questo testo rendendolo piu fluido, elegante e professionale. Mantieni il significato originale. Rispondi SOLO con il testo migliorato:\n\n' + text;
+    ? 'Correggi tutti gli errori grammaticali, ortografici e di punteggiatura in questo testo. Rispondi SOLO con il testo corretto:\n\n' + text
+    : 'Migliora lo stile di questo testo rendendolo più fluido e professionale. Rispondi SOLO con il testo migliorato:\n\n' + text;
+
   try {
-    var res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:2000, messages:[{role:'user',content:prompt}] }) });
+    var res = await fetch("https://mentora-ai-u3ta.onrender.com/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: prompt })
+    });
+
     var data = await res.json();
-    var result = data.content && data.content[0] && data.content[0].text ? data.content[0].text : 'Errore.';
-    G('correctResult').textContent = result;
+
+    G('correctResult').textContent = data.reply;
     G('correctResult').style.display = 'block';
     G('correctCopyBtn').style.display = 'inline-block';
-  } catch(e) { G('correctResult').textContent = 'Errore: ' + e.message; G('correctResult').style.display = 'block'; }
+
+  } catch(e) {
+    G('correctResult').textContent = 'Errore: ' + e.message;
+    G('correctResult').style.display = 'block';
+  }
+
   G('correctLoad').style.display = 'none';
 }
 
-function copyCorrect() {
-  var text = G('correctResult').textContent;
-  navigator.clipboard.writeText(text).then(function() { toast('Testo copiato!'); });
-}
 
 // ── SUMMARIZE ─────────────────────────────────────────────────────────────────
 async function summarizeText(mode) {
