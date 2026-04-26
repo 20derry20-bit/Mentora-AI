@@ -731,6 +731,307 @@
   </div>
 </div>
 
+<!-- Pulsante Pagina Legale -->
+<button id="openLegal" style="
+  padding: 12px 22px;
+  background: #1f6feb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  transition: 0.25s;
+">
+  Pagina legale
+</button>
+
+<!-- Sfondo scuro popup -->
+<div id="legalOverlay" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease forwards;
+">
+
+  <!-- Contenitore popup -->
+  <div id="legalPopup" style="
+    width: 90%;
+    max-width: 900px;
+    max-height: 80vh;
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    overflow-y: auto;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    transform: scale(0.85);
+    opacity: 0;
+    animation: popupIn 0.35s ease forwards;
+  ">
+
+    <!-- Pulsante chiudi -->
+    <button id="closeLegal" style="
+      float: right;
+      background: #e63946;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-bottom: 10px;
+    ">
+      Chiudi
+    </button>
+
+    <!-- CONTENUTO LEGALE COMPLETO -->
+    <h2>Pagina Legale Completa — Mentora AI</h2>
+    <p class="muted">Ultimo aggiornamento: 26/04/2026</p>
+
+    <h3>1. Introduzione</h3>
+    <p>
+      Benvenuto su <strong>Mentora AI</strong> (“Servizio”). Questa pagina descrive:
+    </p>
+    <ul>
+      <li>come vengono trattati i dati degli utenti;</li>
+      <li>quali sono i diritti degli utenti;</li>
+      <li>le regole per l’utilizzo del Servizio;</li>
+      <li>le responsabilità e i limiti legali;</li>
+      <li>le tecnologie utilizzate (cookie, log, hosting).</li>
+    </ul>
+
+    <h3>2. Titolare del trattamento</h3>
+    <p>
+      Il Titolare del trattamento dei dati personali relativi all’utilizzo di Mentora AI è:
+    </p>
+
+    <p>
+      <strong>Il Genitore/Tutore Legale del Sviluppatore Minorenne</strong><br>
+      In qualità di responsabile legale del progetto Mentora AI.<br>
+      Il contatto con il Titolare può essere richiesto tramite canale dedicato.
+    </p>
+
+    <p>
+      Il minore sviluppatore del progetto non riveste alcun ruolo giuridico nella gestione
+      dei dati personali, che rimane interamente in capo al Titolare adulto sopra indicato.
+    </p>
+
+    <h3>3. Dati raccolti</h3>
+    <h4>3.1 Dati raccolti automaticamente</h4>
+    <ul>
+      <li>Indirizzo IP</li>
+      <li>Tipo di dispositivo e browser</li>
+      <li>Log tecnici del server</li>
+      <li>Errori e richieste inviate al backend</li>
+    </ul>
+
+    <h4>3.2 Dati forniti volontariamente</h4>
+    <p>
+      I messaggi inviati all’AI vengono elaborati per generare risposte.
+      Nessun dato viene venduto o usato per profilazione.
+    </p>
+
+    <h3>4. Finalità del trattamento</h3>
+    <ul>
+      <li>Fornire risposte tramite Mentora AI</li>
+      <li>Migliorare stabilità e sicurezza</li>
+      <li>Prevenire abusi</li>
+      <li>Analisi tecniche anonime</li>
+    </ul>
+
+    <h3>5. Base giuridica</h3>
+    <ul>
+      <li>Art. 6(1)(b) GDPR – esecuzione del servizio</li>
+      <li>Art. 6(1)(f) GDPR – legittimo interesse</li>
+    </ul>
+
+    <h3>6. Conservazione dei dati</h3>
+    <ul>
+      <li>Log server: 7–30 giorni</li>
+      <li>Dati di utilizzo: temporanei</li>
+      <li>Nessuna conservazione per marketing</li>
+    </ul>
+
+    <h3>7. Condivisione dei dati</h3>
+    <p>
+      I dati possono essere trattati da:
+    </p>
+    <ul>
+      <li>GitHub Pages (frontend)</li>
+      <li>Render.com (backend)</li>
+    </ul>
+
+    <h3>8. Cookie</h3>
+    <p>
+      Mentora AI utilizza solo cookie tecnici necessari al funzionamento.
+    </p>
+
+    <h3>9. Diritti dell’utente</h3>
+    <ul>
+      <li>Accesso ai dati</li>
+      <li>Cancellazione</li>
+      <li>Limitazione del trattamento</li>
+      <li>Opposizione</li>
+      <li>Portabilità</li>
+    </ul>
+
+    <h3>10. Sicurezza</h3>
+    <ul>
+      <li>HTTPS</li>
+      <li>Log minimi</li>
+      <li>Nessuna profilazione</li>
+      <li>Protezione tecnica dei dati</li>
+    </ul>
+
+    <h3>11. Termini di Servizio</h3>
+
+    <h4>11.1 Uso consentito</h4>
+    <ul>
+      <li>Uso lecito e rispettoso</li>
+      <li>Divieto di attività illegali</li>
+      <li>Divieto di contenuti offensivi</li>
+      <li>Divieto di aggirare limiti tecnici</li>
+    </ul>
+
+    <h4>11.2 Nessuna garanzia</h4>
+    <p>
+      Mentora AI è fornito “così com’è”. Non garantiamo:
+    </p>
+    <ul>
+      <li>accuratezza delle risposte</li>
+      <li>disponibilità continua</li>
+      <li>assenza di errori</li>
+    </ul>
+
+    <h4>11.3 Limitazione di responsabilità</h4>
+    <ul>
+      <li>Danni derivanti dall’uso improprio</li>
+      <li>Decisioni prese sulla base dell’AI</li>
+      <li>Interruzioni o malfunzionamenti tecnici</li>
+    </ul>
+
+    <h4>11.4 Copyright dei contenuti generati dall’AI</h4>
+    <p>
+      I contenuti generati (“Output”) possono essere utilizzati dall’utente,
+      ma senza garanzia di originalità o assenza di violazioni di diritti di terzi.
+      L’utente è responsabile dell’uso che ne fa.
+    </p>
+
+    <h4>11.5 Copyright del logo e degli elementi grafici</h4>
+    <p>
+      Il logo, l’icona e tutti gli elementi grafici di Mentora AI sono di proprietà
+      esclusiva del Titolare. È severamente vietato copiarli, scaricarli, modificarli,
+      distribuirli o usarli senza autorizzazione.
+    </p>
+
+    <h4>11.6 Clausola Anti‑Abusi Avanzata</h4>
+    <p>
+      È vietato utilizzare Mentora AI per attività illegali, dannose o che violino
+      diritti di terzi.
+    </p>
+
+    <h4>11.7 Clausola AI Generativa</h4>
+    <p>
+      Mentora AI genera contenuti automaticamente tramite modelli di intelligenza
+      artificiale. Le risposte possono contenere errori o informazioni non aggiornate.
+    </p>
+
+    <h4>11.8 Servizi Esterni</h4>
+    <p>
+      Mentora AI utilizza servizi esterni come GitHub Pages e Render.com.
+    </p>
+
+    <h4>11.9 Contenuti Sensibili e Limitazioni d’Uso</h4>
+    <p>
+      Mentora AI non sostituisce consulenze professionali.
+    </p>
+
+    <h4>11.10 DMCA</h4>
+    <p>
+      Per segnalazioni di copyright, contatto disponibile su richiesta.
+    </p>
+
+    <h4>11.11 Clausola di Manleva</h4>
+    <p>
+      L’utente manleva il Titolare da responsabilità derivanti dall’uso improprio.
+    </p>
+
+    <h4>11.12 Età Minima</h4>
+    <p>
+      Per utilizzare Mentora AI, l’utente deve avere almeno 13 anni.
+    </p>
+
+    <h4>11.13 Giurisdizione</h4>
+    <p>
+      I presenti Termini sono regolati dalla legge italiana.
+    </p>
+
+    <h4>11.14 Separabilità</h4>
+    <p>
+      Se una clausola è invalida, le altre restano valide.
+    </p>
+
+    <h4>11.15 Limitazione di Responsabilità Estesa</h4>
+    <p>
+      Il Titolare non è responsabile per danni indiretti, perdita di dati,
+      interruzioni o uso improprio del Servizio.
+    </p>
+
+    <h4>11.16 Divieto di Uso Commerciale</h4>
+    <p>
+      È vietato utilizzare Mentora AI per scopi commerciali senza autorizzazione.
+    </p>
+
+    <h4>11.17 Forza Maggiore</h4>
+    <p>
+      Il Titolare non è responsabile per eventi fuori dal proprio controllo.
+    </p>
+
+    <h4>11.18 Esclusione di Garanzie Tecniche</h4>
+    <p>
+      Il Servizio è fornito “così com’è” senza garanzie tecniche.
+    </p>
+
+    <h4>11.19 Limitazione Responsabilità Output AI</h4>
+    <p>
+      Il Titolare non è responsabile per errori, inesattezze o contenuti generati
+      automaticamente dall’AI.
+    </p>
+
+    <h3>12. Modifiche</h3>
+    <p>
+      Questa pagina può essere aggiornata in qualsiasi momento.
+    </p>
+
+    <h3>13. Contatti</h3>
+    <p>
+      Il contatto con il Titolare può essere richiesto tramite canale dedicato.
+    </p>
+
+  </div>
+</div>
+
+<style>
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes popupIn { 0% { transform: scale(0.85); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+</style>
+
+<script>
+const openBtn = document.getElementById("openLegal");
+const closeBtn = document.getElementById("closeLegal");
+const overlay = document.getElementById("legalOverlay");
+
+openBtn.onclick = () => overlay.style.display = "flex";
+closeBtn.onclick = () => overlay.style.display = "none";
+overlay.onclick = (e) => { if (e.target === overlay) overlay.style.display = "none"; };
+</script>
+
+  
 <!-- MODAL VIDEO -->
 <div class="modal-backdrop" id="videoModal">
   <div class="modal">
