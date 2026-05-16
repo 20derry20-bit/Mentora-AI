@@ -504,6 +504,11 @@
           <textarea id="chatInput" placeholder="Scrivi un messaggio per Zyro..." oninput="autoResize(this)" onkeydown="handleKey(event)"></textarea>
           <button class="btn btn-icon btn-primary" id="sendBtn">➤</button>
         </div>
+        <div class="voice-buttons">
+    <button id="speakBtn">🔊 Leggi</button>
+    <button id="micBtn">🎤 Parla</button>
+</div>
+        
         <div class="input-tools">
           <div style="position:relative;">
             <button class="style-selector" id="styleSelector">
@@ -1723,6 +1728,52 @@ overlay.onclick = (e) => { if (e.target === overlay) overlay.style.display = "no
 
   G("sendBtn").addEventListener("click", function(){ sendMsg(); });
   G("attachBtn").addEventListener("click", openAttachModal);
+  // LETTURA VOCALE (Zyro legge l'ultima risposta)
+function speak(text) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "it-IT";
+    utter.rate = 1;
+    utter.pitch = 1;
+    speechSynthesis.speak(utter);
+}
+
+document.getElementById("speakBtn").onclick = () => {
+    const lastReply = document.querySelector(".message.bot:last-child")?.innerText;
+    if (lastReply) speak(lastReply);
+};
+
+  // LETTURA VOCALE (Zyro legge l'ultima risposta)
+function speak(text) {
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = "it-IT";
+  utter.rate = 1;
+  utter.pitch = 1;
+  speechSynthesis.speak(utter);
+}
+
+document.getElementById("speakBtn").onclick = () => {
+  const lastReply = document.querySelector(".message.bot:last-child")?.innerText;
+  if (lastReply) speak(lastReply);
+};
+
+// SCRITTURA VOCALE (tu parli e Zyro scrive)
+function startVoiceInput() {
+    const rec = new webkitSpeechRecognition();
+    rec.lang = "it-IT";
+
+    rec.onresult = (e) => {
+        const text = e.results[0][0].transcript;
+        document.getElementById("chatInput").value = text;
+        sendMsg(); // invia automaticamente
+    };
+
+    rec.start();
+}
+
+document.getElementById("micBtn").onclick = () => {
+    startVoiceInput();
+};
+
 </script>
 </body>
 </html>
